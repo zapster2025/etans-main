@@ -1,177 +1,168 @@
-  body {
+/* General Page Styling */
+body {
     margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #fafafa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
     color: #333;
-  }
+}
 
-  /* Control panel */
-  .controls {
-    padding: 8px 12px;
-    background: linear-gradient(to right, #f8f9fa, #e9ecef);
-    border-bottom: 1px solid #ccc;
+/* Control Bar */
+.controls {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 6px;
-  }
-  .controls button {
-    padding: 6px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    border: 1px solid #bbb;
-    border-radius: 4px;
-    background: #fff;
-    transition: background 0.2s, box-shadow 0.2s;
-  }
-  .controls button:hover {
-    background: #f0f0f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-
-  /* Table container */
-  .table-container {
-    width: 100%;
-    height: 90vh;
-    overflow: auto;
-    border: 2px solid #ccc;
-    background-color: #fff;
-  }
-
-  /* Table styling */
-  table {
-    border-collapse: collapse;
-    font-size: 13px;
-    min-width: 2200px;
-    table-layout: fixed;
-    width: 100%;
-  }
-  th, td {
-    border: 2px solid #ddd;
-    padding: 4px;
-    text-align: center;
-  }
-
-  /* Sticky headers */
-  thead th {
-    background-color: #f5f5f5;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    font-weight: 600;
-  }
-
- /* Sticky first column */
-th:nth-child(1),
-td:nth-child(1) {
-  width: 80px;
-  background-color: #f9f9f9;
-  position: sticky;
-  left: 0;
-  z-index: 1; /* LOWER so Cs is not hidden behind it */
-  font-weight: 600;
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-}
-
-
-
-  /* Input fields */
-  input {
-    width: 100%;
-    box-sizing: border-box;
-    border: none;
-    text-align: center;
-    font-size: 14px;
-	color: red;
-    background: transparent;
-    transition: background-color 0.15s;
-  }
-  input:focus {
-    outline: none;
-    background-color: #e6f7ff;
-  }
-
-  /* Hover effect on table cells */
-  td:hover {
-    background-color: #fdfde7;
-  }
-
-  /* Remove number spinners */
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-  }
-  input[type=number] {
-      -moz-appearance: textfield;
-  }
-
-  /* Summary rows */
-  #sumRow {
-    background-color: #ffeaa7;
-    font-weight: bold;
-  }
-  #simplifiedRow {
-    background-color: #a8ffdf;
-    font-weight: bold;
-  }
-
-  /* Rotate notice */
-  #rotateNotice {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: linear-gradient(to right, #2b5876, #4e4376);
     color: white;
-    font-size: 1.5em;
-    text-align: center;
-    padding-top: 40vh;
-    z-index: 9999;
-  }
-
-  /* Hide button small style */
-  .hide-btn {
-    padding: 3px 6px;
-    font-size: 11px;
-    margin-left: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.controls h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    flex: 1;
+}
+.controls img {
+    border-radius: 6px;
+    margin-left: 10px;
+}
+.controls button {
+    background: #ff9800;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 4px;
     cursor: pointer;
-    border: 1px solid #bbb;
+    transition: background 0.3s;
+}
+.controls button:hover {
+    background: #e68900;
+}
+
+/* Table Container */
+.table-container {
+    overflow-x: auto;
+    padding: 0px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1200px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+thead th {
+    background: #37474f;
+    color: white;
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 0.9rem;
+}
+tbody td {
+    border: 1.5px solid red;
+    text-align: center;
+    padding: 6px;
+}
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+tbody tr:hover {
+    background: #e3f2fd;
+}
+
+/* Sticky First Column */
+.sticky-col {
+    position: sticky;
+    left: 0;
+    background: #f4f6f8;
+    z-index: 2;
+    font-weight: bold;
+}
+
+/* Inputs in Table */
+input[type="number"] {
+    width: 70px;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Special Rows */
+#sumRow {
+    background: #ffc107;
+    font-weight: bold;
+}
+#simplifiedRow {
+    background: #ffecb3;
+    font-weight: bold;
+}
+
+/* Hide Button */
+.hide-btn {
+    background: #e53935;
+    border: none;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    margin-left: 5px;
     border-radius: 3px;
-    background: #fff;
-    transition: background 0.2s;
-  }
-  .hide-btn:hover {
-    background: #f5f5f5;
-  }
-  
-  /* Buttons */
-button {
-  background-color: #007bff; /* blue */
-  color: red;
-  border: none;
-  padding: 6px 14px;
-  margin: 4px;
-  border-radius: 4px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+    cursor: pointer;
+}
+.hide-btn:hover {
+    background: #c62828;
 }
 
-button:hover {
-  background-color: #0056b3; /* darker blue on hover */
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+}
+.nav-buttons button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.nav-buttons button:hover {
+    background: #1565c0;
 }
 
-button:active {
-  transform: scale(0.97); /* slight press effect */
+/* Responsive: Smaller devices */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .controls h1 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    table {
+        min-width: 900px;
+    }
 }
 
-h1 {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  font-size: 28px;
-  color: #333; /* text color */
-  text-align: center;
-  background: linear-gradient(to right, #fff8e1, #ffe0b2); /* soft egg-like gradient */
-  padding: 10px 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* Remove arrows in number inputs (Chrome, Safari, Edge, Opera) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove arrows in number inputs (Firefox) */
+input[type="number"] {
+    -moz-appearance: textfield;
 }

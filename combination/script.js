@@ -1,4 +1,4 @@
-
+// Make all table inputs number-only
 document.querySelectorAll("table input").forEach(input => {
   input.type = "number";
   input.min = 0;
@@ -11,29 +11,50 @@ const inputs = document.querySelectorAll("#eggTable input");
 const sumCells = document.querySelectorAll("#sumRow .sumCell");
 const simpCells = document.querySelectorAll("#simplifiedRow .simpCell");
 
+// ---------------------------
+// Save table data to localStorage
+// ---------------------------
 function saveData() {
   const data = Array.from(inputs).map(input => input.value);
-  const hiddenRows = Array.from(document.querySelectorAll("[id^='row-']")).map(row =>
-    row.style.display === "none"
-  );
+
+  // Store IDs of hidden rows
+  const hiddenRows = Array.from(document.querySelectorAll("[id^='row-']"))
+    .filter(row => row.style.display === "none")
+    .map(row => row.id);
+
   localStorage.setItem("eggTableData", JSON.stringify({ data, hiddenRows }));
 }
 
+// ---------------------------
+// Load table data from localStorage
+// ---------------------------
 function loadData() {
   const saved = localStorage.getItem("eggTableData");
-  if (saved) {
-    const { data, hiddenRows } = JSON.parse(saved);
-    inputs.forEach((input, i) => input.value = data[i] || "");
-    document.querySelectorAll("[id^='row-']").forEach((row, i) => {
-      if (hiddenRows[i]) {
-        row.style.display = "none";
-        row.querySelector(".hide-btn").textContent = "Show";
-      }
-    });
-    updateSums();
-  }
+  if (!saved) return;
+
+  const { data, hiddenRows } = JSON.parse(saved);
+
+  // Restore input values
+  inputs.forEach((input, i) => input.value = data[i] || "");
+
+  // Restore hidden rows
+  document.querySelectorAll("[id^='row-']").forEach(row => {
+    const btn = row.querySelector(".hide-btn");
+    if (hiddenRows.includes(row.id)) {
+      row.style.display = "none";
+      if(btn) btn.textContent = "Show";
+    } else {
+      row.style.display = "";
+      if(btn) btn.textContent = "Hide";
+    }
+  });
+
+  updateSums();
 }
 
+// ---------------------------
+// Reset table data
+// ---------------------------
 function resetData() {
   if (confirm("⚠ Are you sure you want to reset all data? This will clear all entered numbers.")) {
     inputs.forEach(input => input.value = "");
@@ -42,15 +63,20 @@ function resetData() {
   }
 }
 
+// ---------------------------
+// Update SUM TOTAL and SIMPLIFIED TOTAL
+// ---------------------------
 function updateSums(){
   const sums = Array(sumCells.length).fill(0);
+
   inputs.forEach((input, idx) => {
     const val = parseFloat(input.value) || 0;
     sums[idx % sums.length] += val;
   });
-  sums.forEach((sum, i) => {
-    sumCells[i].textContent = sum;
-  });
+
+  sums.forEach((sum, i) => sumCells[i].textContent = sum);
+
+  // Calculate SIMPLIFIED TOTAL
   for(let i = 0; i < sums.length; i += 3) {
     let cs = sums[i], tr = sums[i+1], pcs = sums[i+2];
     if(pcs >= 30){
@@ -67,21 +93,24 @@ function updateSums(){
     simpCells[i+1].textContent = tr;
     simpCells[i+2].textContent = pcs;
   }
+
   saveData();
 }
 
-// Validation for Tr and Pcs columns
+// ---------------------------
+// Input validation for Tr and Pcs columns
+// ---------------------------
 inputs.forEach((input, idx) => {
   input.addEventListener("input", function() {
     const colPosition = (idx % (13 * 3)) % 3; // 0=Cs, 1=Tr, 2=Pcs
     let val = parseInt(this.value) || 0;
 
     if (colPosition === 1 && val > 11) {
-      alert("wrong input");
+      alert("Wrong input: Tr cannot exceed 11");
       this.value = "";
     }
     if (colPosition === 2 && val > 29) {
-      alert("wrong input");
+      alert("Wrong input: Pcs cannot exceed 29");
       this.value = "";
     }
 
@@ -89,7 +118,10 @@ inputs.forEach((input, idx) => {
   });
 });
 
-function toggleRow(b){
+// ---------------------------
+// Toggle row visibility
+// ---------------------------
+function toggleRow(b) {
   const row = document.getElementById(`row-${b}`);
   const btn = row.querySelector(".hide-btn");
   if(row.style.display === "none"){
@@ -102,22 +134,36 @@ function toggleRow(b){
   saveData();
 }
 
+// Show all rows
 function showAllRows(){
   const rows = document.querySelectorAll("[id^='row-']");
   rows.forEach(row => {
     row.style.display = "";
-    row.querySelector(".hide-btn").textContent = "Hide";
+    const btn = row.querySelector(".hide-btn");
+    if(btn) btn.textContent = "Hide";
   });
   saveData();
 }
 
+// ---------------------------
+// Orientation check
+// ---------------------------
 function checkOrientation(){
-  document.getElementById("rotateNotice").style.display =
-    (window.innerHeight > window.innerWidth) ? "block" : "none";
+  const notice = document.getElementById("rotateNotice");
+  if(notice){
+    notice.style.display = (window.innerHeight > window.innerWidth) ? "block" : "none";
+  }
 }
 
+// ---------------------------
+// Event listeners
+// ---------------------------
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("load", () => {
   checkOrientation();
   loadData();
+});
+
+document.addEventListener("input", e => {
+  if (e.target.tagName === "INPUT") saveData();
 });
