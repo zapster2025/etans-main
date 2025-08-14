@@ -106,11 +106,11 @@ inputs.forEach((input, idx) => {
     let val = parseInt(this.value) || 0;
 
     if (colPosition === 1 && val > 11) {
-      alert("Wrong input: Tr cannot exceed 11");
+      alert("Mali ang input: Hindi puwedeng lumampas sa 11 trays");
       this.value = "";
     }
     if (colPosition === 2 && val > 29) {
-      alert("Wrong input: Pcs cannot exceed 29");
+      alert("Mali ang input: Hindi puwedeng lumampas sa 29 Pcs");
       this.value = "";
     }
 
